@@ -23,6 +23,15 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 
+##date
+
+from datetime import date
+from datetime import timedelta
+today = date.today()
+ayer = today + timedelta(days=-1)
+sayer_inicio = str(ayer) + "T06:00:00.000Z"
+sayer_fin = str(today) + "T05:59:59.999Z"
+
 def send_mail(creds, cfg_report, report, csv_content):
     try:
         server = smtplib.SMTP(creds['MAIL_SERVER'], creds['MAIL_PORT'])
@@ -73,7 +82,7 @@ def get_data(creds, cfg_report):
             "query": {
               "bool": {
                 "filter": [
-                  { "range": { "@timestamp": { "gt": cfg_report['since_date'], "lte": "now/m" } } },
+                  { "range": { "@timestamp": { "gt": sayer_inicio, "lte": sayer_fin } } },
                   { "query_string": { "query": cfg_report['query'] } }
                 ]
               }
