@@ -47,7 +47,7 @@ def gen_report(data_json, report, cfg_report):
     new_col=cfg_report['rename_fields_to']
     dtf=cfg_report['dt'][1]
     df = pd.json_normalize(data_json, max_level=10)
-    df.drop(columns=["_index", "_type", "_id", "_score"], inplace=True)
+    df.drop(columns=["_index", "_id", "_score"], inplace=True)
     df['_source.@timestamp'] = pd.to_datetime(df['_source.@timestamp'], utc=True)
     df['_source.@timestamp'] = df['_source.@timestamp'].dt.tz_convert(cfg_report['dt'][0])
     df['_source.@timestamp'] = df['_source.@timestamp'].dt.strftime(dtf)
