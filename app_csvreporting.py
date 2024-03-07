@@ -55,6 +55,7 @@ def gen_report(data_json, report, cfg_report):
     df.columns=aux_col
     df = df.reindex(columns=cfg_report['fields'])
     df.columns=new_col
+    df["eventos"] = "1"
     if cfg_report['agg'][0]:
         df[new_col[0]] = pd.to_datetime(df[new_col[0]], format=dtf)
         df.fillna('NA', inplace=True)
